@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Footer from "../footer/footer";
 import TopHeader from "../topheader/topheader";
 import { ToastContainer } from "react-toastify";
-import WedevsHeader from "../header/header2";
+import DevWhiteHeader from "../header/header2";
 import ScrollToTop from "../scrolltotop/scrolltotop";
 
 interface MainLayoutProps {
@@ -18,7 +18,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       {/* <DrawersMenu setOpen={setOpen} open={open} /> */}
       <div className={`${open ? "contrast-50 blur-sm" : "contrast-100"}`}>
         <TopHeader />
-        <WedevsHeader />
+        <DevWhiteHeader />
         {children}
         <ToastContainer />
         <Footer />

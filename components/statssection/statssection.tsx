@@ -118,7 +118,7 @@ function StatCard({
       {/* Number */}
       <div
         style={{
-          fontFamily: "'Syne', system-ui, sans-serif",
+          fontFamily: "",
           fontSize: "clamp(38px, 4vw, 32px)",
           fontWeight: 800,
           color: "#0f172a",
@@ -196,7 +196,7 @@ export default function StatsSection() {
       ref={sectionRef}
       style={{
         position: "relative",
-        padding: "100px 24px",
+        padding: "0px 24px",
         background: "#f8fafc",
         overflow: "hidden",
       }}
@@ -234,7 +234,7 @@ export default function StatsSection() {
         >
           <h2
             style={{
-              fontFamily: "'Syne', system-ui, sans-serif",
+              fontFamily: "",
               fontSize: "clamp(22px, 3.5vw, 36px)",
               fontWeight: 800,
               color: "#0f172a",

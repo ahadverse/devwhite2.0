@@ -30,7 +30,6 @@ import {
   Monitor,
 } from "lucide-react";
 
-/* ─── Types ─────────────────────────────────────────────── */
 interface MenuItem {
   label: string;
   description: string;
@@ -39,7 +38,6 @@ interface MenuItem {
   icon: React.ElementType;
 }
 
-/* ─── Products Data ──────────────────────────────────────── */
 const PRODUCTS: MenuItem[] = [
   {
     label: "Dokan Multivendor",
@@ -120,7 +118,6 @@ const PRODUCTS: MenuItem[] = [
   },
 ];
 
-/* ─── Services Data ──────────────────────────────────────── */
 const SERVICES: MenuItem[] = [
   {
     label: "Web Development",
@@ -198,11 +195,9 @@ const SERVICES: MenuItem[] = [
   },
 ];
 
-/* ─── Shared Mega Panel ──────────────────────────────────── */
 interface PanelProps {
   items: MenuItem[];
   viewAllLabel: string;
-  anchorRect: DOMRect | null;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
@@ -210,24 +205,19 @@ interface PanelProps {
 function MegaPanel({
   items,
   viewAllLabel,
-  anchorRect,
   onMouseEnter,
   onMouseLeave,
 }: PanelProps) {
-  const PANEL_WIDTH = 1060;
-  const viewportW = typeof window !== "undefined" ? window.innerWidth : 1280;
-  const left = Math.max(16, (viewportW - PANEL_WIDTH) / 2);
-  const top = anchorRect ? anchorRect.bottom + 8 : 72;
-
   return (
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       style={{
-        position: "fixed",
-        top,
-        left,
-        width: PANEL_WIDTH,
+        position: "absolute", // ← KEY: absolute, not fixed
+        top: "100%", // ← KEY: anchored to header bottom
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 1060,
         zIndex: 99999,
         backgroundColor: "#fff",
         borderRadius: 16,
@@ -235,9 +225,9 @@ function MegaPanel({
         border: "1px solid #f0f0f0",
         padding: "32px 32px 24px",
         boxSizing: "border-box",
+        marginTop: 8,
       }}
     >
-      {/* 4-column grid */}
       <div
         style={{
           display: "grid",
@@ -269,7 +259,6 @@ function MegaPanel({
                 (e.currentTarget.style.background = "transparent")
               }
             >
-              {/* Circular gradient icon */}
               <div
                 style={{
                   width: 48,
@@ -285,8 +274,6 @@ function MegaPanel({
               >
                 <Icon size={22} color='#fff' strokeWidth={1.8} />
               </div>
-
-              {/* Text */}
               <div style={{ minWidth: 0, paddingTop: 1 }}>
                 <div
                   style={{
@@ -340,8 +327,6 @@ function MegaPanel({
           );
         })}
       </div>
-
-      {/* Footer */}
       <div
         style={{
           borderTop: "1px solid #f0f0f0",
@@ -374,14 +359,12 @@ function MegaPanel({
   );
 }
 
-/* ─── Header ─────────────────────────────────────────────── */
-
+// ─── Header ───────────────────────────────────────────────────────────────────
 type ActiveMenu = "products" | "services" | null;
-const NAV_LINKS = ["Blog", "About", "Docs", "Contact Us"];
+const NAV_LINKS = ["Blogs", "About", "Contact Us"];
 
-export default function WedevsHeader() {
+export default function DevWhiteHeader() {
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
-  const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -393,16 +376,14 @@ export default function WedevsHeader() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const openMenu = (key: ActiveMenu, el: HTMLElement) => {
+  // 🔑 No anchorRect needed anymore
+  const openMenu = (key: ActiveMenu) => {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
-    setAnchorRect(el.getBoundingClientRect());
     setActiveMenu(key);
   };
-
   const scheduleClose = () => {
     leaveTimer.current = setTimeout(() => setActiveMenu(null), 150);
   };
-
   const cancelClose = () => {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
   };
@@ -417,7 +398,6 @@ export default function WedevsHeader() {
     border: "none",
     cursor: "pointer",
     fontSize: 15,
-    // fontWeight: 600,
     color: activeMenu === key ? "#2563eb" : "#333",
     borderRadius: 8,
     fontFamily: "inherit",
@@ -426,6 +406,7 @@ export default function WedevsHeader() {
 
   return (
     <>
+      {/* 🔑 overflow:visible lets the absolute MegaPanel escape the header box */}
       <header
         style={{
           position: "sticky",
@@ -434,6 +415,7 @@ export default function WedevsHeader() {
           backgroundColor: "#fff",
           borderBottom: "1px solid #f0f0f0",
           height: 64,
+          overflow: "visible",
         }}
       >
         <div
@@ -461,24 +443,10 @@ export default function WedevsHeader() {
               gap: 8,
             }}
           >
-            <div
-            //   style={{
-            //     width: 36,
-            //     height: 36,
-            //     borderRadius: "50%",
-            //     background:
-            //       "conic-gradient(from 0deg,#ef4444,#f97316,#22c55e,#3b82f6,#8b5cf6,#ef4444)",
-            //     flexShrink: 0,
-            //   }}
-            />
-            <img
-              src='/logo.png'
-              alt='WeDevs'
-              style={{ height: 50, color: "#333", fontWeight: 700 }}
-            />
+            <img src='/logo.png' alt='DevWhite' style={{ height: 50 }} />
           </a>
 
-          {/* Desktop Nav — centered */}
+          {/* Desktop Nav */}
           {!isMobile && (
             <nav
               style={{
@@ -491,9 +459,8 @@ export default function WedevsHeader() {
                 transform: "translateX(-50%)",
               }}
             >
-              {/* Products */}
               <button
-                onMouseEnter={(e) => openMenu("products", e.currentTarget)}
+                onMouseEnter={() => openMenu("products")}
                 onMouseLeave={scheduleClose}
                 style={dropdownBtnStyle("products")}
               >
@@ -509,10 +476,8 @@ export default function WedevsHeader() {
                   }}
                 />
               </button>
-
-              {/* Services */}
               <button
-                onMouseEnter={(e) => openMenu("services", e.currentTarget)}
+                onMouseEnter={() => openMenu("services")}
                 onMouseLeave={scheduleClose}
                 style={dropdownBtnStyle("services")}
               >
@@ -528,7 +493,6 @@ export default function WedevsHeader() {
                   }}
                 />
               </button>
-
               {NAV_LINKS.map((label) => (
                 <a
                   key={label}
@@ -606,210 +570,198 @@ export default function WedevsHeader() {
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           )}
-        </div>
-      </header>
 
-      {/* Products Mega Menu */}
-      {activeMenu === "products" && !isMobile && (
-        <MegaPanel
-          items={PRODUCTS}
-          viewAllLabel='View all products'
-          anchorRect={anchorRect}
-          onMouseEnter={cancelClose}
-          onMouseLeave={scheduleClose}
-        />
-      )}
-
-      {/* Services Mega Menu */}
-      {activeMenu === "services" && !isMobile && (
-        <MegaPanel
-          items={SERVICES}
-          viewAllLabel='View all services'
-          anchorRect={anchorRect}
-          onMouseEnter={cancelClose}
-          onMouseLeave={scheduleClose}
-        />
-      )}
-
-      {/* Mobile Drawer */}
-      {mobileOpen && isMobile && (
-        <div
-          style={{
-            position: "fixed",
-            top: 64,
-            left: 0,
-            right: 0,
-            background: "#fff",
-            zIndex: 9998,
-            overflowY: "auto",
-            padding: 16,
-            maxHeight: "calc(100vh - 64px)",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-            borderTop: "1px solid #f0f0f0",
-          }}
-        >
-          {/* Close button */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginBottom: 8,
-            }}
-          >
-            <button
-              onClick={() => setMobileOpen(false)}
-              style={{
-                border: "none",
-                background: "#f4f4f5",
-                cursor: "pointer",
-                color: "#333",
-                width: 36,
-                height: 36,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <X size={18} />
-            </button>
-          </div>
-          {/* Products */}
-          <div style={{ marginBottom: 8 }}>
+          {/* 🔑 MegaPanels render INSIDE the header as absolute children */}
+          {activeMenu === "products" && !isMobile && (
+            <MegaPanel
+              items={PRODUCTS}
+              viewAllLabel='View all products'
+              onMouseEnter={cancelClose}
+              onMouseLeave={scheduleClose}
+            />
+          )}
+          {activeMenu === "services" && !isMobile && (
+            <MegaPanel
+              items={SERVICES}
+              viewAllLabel='View all services'
+              onMouseEnter={cancelClose}
+              onMouseLeave={scheduleClose}
+            />
+          )}
+          {/* 🔑 Mobile Drawer — INSIDE header, position absolute so it follows sticky header on scroll */}
+          {mobileOpen && isMobile && (
             <div
               style={{
-                fontSize: 11,
-                // fontWeight: 700,
-                color: "#aaa",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                padding: "8px 12px",
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                right: 0,
+                background: "#fff",
+                zIndex: 9998,
+                overflowY: "auto",
+                padding: 16,
+                maxHeight: "calc(100vh - 64px)",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+                borderTop: "1px solid #f0f0f0",
               }}
             >
-              Products
-            </div>
-            {PRODUCTS.map((p) => {
-              const Icon = p.icon;
-              return (
-                <a
-                  key={p.label}
-                  href='#'
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: "10px 12px",
-                    borderRadius: 10,
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: "50%",
-                      background: p.gradient,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={16} color='#fff' />
-                  </div>
-                  <span
-                    style={{ fontSize: 14, fontWeight: 600, color: "#111" }}
-                  >
-                    {p.label}
-                  </span>
-                </a>
-              );
-            })}
-          </div>
-
-          {/* Services */}
-          <div
-            style={{
-              marginBottom: 8,
-              borderTop: "1px solid #f0f0f0",
-              paddingTop: 12,
-            }}
-          >
-            <div
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                color: "#aaa",
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                padding: "8px 12px",
-              }}
-            >
-              Services
-            </div>
-            {SERVICES.map((s) => {
-              const Icon = s.icon;
-              return (
-                <a
-                  key={s.label}
-                  href='#'
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: "10px 12px",
-                    borderRadius: 10,
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: "50%",
-                      background: s.gradient,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={16} color='#fff' />
-                  </div>
-                  <span
-                    style={{ fontSize: 14, fontWeight: 600, color: "#111" }}
-                  >
-                    {s.label}
-                  </span>
-                </a>
-              );
-            })}
-          </div>
-
-          {/* Plain links */}
-          <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 12 }}>
-            {NAV_LINKS.map((label) => (
-              <a
-                key={label}
-                href='#'
+              <div
                 style={{
-                  display: "block",
-                  padding: "12px 12px",
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: "#111",
-                  textDecoration: "none",
-                  borderRadius: 10,
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginBottom: 8,
                 }}
               >
-                {label}
-              </a>
-            ))}
-          </div>
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  style={{
+                    border: "none",
+                    background: "#f4f4f5",
+                    cursor: "pointer",
+                    color: "#333",
+                    width: 36,
+                    height: 36,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <div style={{ marginBottom: 8 }}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: "#aaa",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "8px 12px",
+                  }}
+                >
+                  Products
+                </div>
+                {PRODUCTS.map((p) => {
+                  const Icon = p.icon;
+                  return (
+                    <a
+                      key={p.label}
+                      href='#'
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        padding: "10px 12px",
+                        borderRadius: 10,
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: "50%",
+                          background: p.gradient,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <Icon size={16} color='#fff' />
+                      </div>
+                      <span
+                        style={{ fontSize: 14, fontWeight: 600, color: "#111" }}
+                      >
+                        {p.label}
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+              <div
+                style={{
+                  marginBottom: 8,
+                  borderTop: "1px solid #f0f0f0",
+                  paddingTop: 12,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: "#aaa",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "8px 12px",
+                  }}
+                >
+                  Services
+                </div>
+                {SERVICES.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.label}
+                      href='#'
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        padding: "10px 12px",
+                        borderRadius: 10,
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: "50%",
+                          background: s.gradient,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <Icon size={16} color='#fff' />
+                      </div>
+                      <span
+                        style={{ fontSize: 14, fontWeight: 600, color: "#111" }}
+                      >
+                        {s.label}
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+              <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 12 }}>
+                {NAV_LINKS.map((label) => (
+                  <a
+                    key={label}
+                    href='#'
+                    style={{
+                      display: "block",
+                      padding: "12px 12px",
+                      fontSize: 15,
+                      fontWeight: 600,
+                      color: "#111",
+                      textDecoration: "none",
+                      borderRadius: 10,
+                    }}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </header>
     </>
   );
 }

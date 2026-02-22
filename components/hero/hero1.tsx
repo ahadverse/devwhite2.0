@@ -950,7 +950,7 @@ export default function HeroSection() {
         alignItems: "center",
         justifyContent: "center",
         fontFamily: "'Syne', system-ui, sans-serif",
-        padding: "120px 16px 100px",
+        padding: "40px 16px 60px",
         boxSizing: "border-box" as const,
       }}
     >
@@ -1246,7 +1246,7 @@ export default function HeroSection() {
             <div key={label} style={{ textAlign: "center" }}>
               <div
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  fontFamily: "Arial, Helvetica, sans-serif",
                   fontSize: 32,
                   fontWeight: 800,
                   color: "#0f172a",
@@ -1257,7 +1257,7 @@ export default function HeroSection() {
               </div>
               <div
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "",
                   fontSize: 12,
                   color: "#94a3b8",
                   fontWeight: 500,
