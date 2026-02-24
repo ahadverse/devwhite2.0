@@ -1,6 +1,6 @@
 "use client";
 
-import AnimatedGrid from "../animatedgrid/animatedgrid";
+import AnimatedGrid from "../../shared/animatedgrid/animatedgrid";
 
 const phpLines = [
   {

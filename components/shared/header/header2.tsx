@@ -434,7 +434,7 @@ export default function DevWhiteHeader() {
         >
           {/* Logo */}
           <a
-            href='#'
+            href='/'
             style={{
               textDecoration: "none",
               flexShrink: 0,
@@ -496,7 +496,7 @@ export default function DevWhiteHeader() {
               {NAV_LINKS.map((label) => (
                 <a
                   key={label}
-                  href='#'
+                  href={label?.toLocaleLowerCase().replace(/\s+/g, "-")}
                   style={{
                     padding: "6px 14px",
                     fontSize: 15,

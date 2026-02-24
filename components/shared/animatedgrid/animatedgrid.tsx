@@ -32,7 +32,7 @@ interface AnimatedGridProps {
 }
 
 export default function AnimatedGrid({
-  color = "rgba(15,23,42,0.035)",
+  color = "rgba(10, 74, 223, 0.12)",
   size = 48,
   speed = 10,
   zIndex = 0,

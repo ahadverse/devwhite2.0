@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUpRight, Clock, User, Tag } from "lucide-react";
-import AnimatedGrid from "../animatedgrid/animatedgrid";
+import AnimatedGrid from "../../shared/animatedgrid/animatedgrid";
 
 const BLOGS = [
   {
@@ -137,7 +137,7 @@ export default function BlogSection() {
         fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
     >
-      <AnimatedGrid color='rgba(15,23,42,0.028)' size={48} speed={14} />
+      <AnimatedGrid />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
