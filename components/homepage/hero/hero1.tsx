@@ -674,7 +674,7 @@ import {
   type ReactNode,
 } from "react";
 import { ArrowRight, Code, Smartphone, Globe } from "lucide-react";
-import AnimatedGrid from "../animatedgrid/animatedgrid";
+import AnimatedGrid from "../../shared/animatedgrid/animatedgrid";
 
 /* ── Mouse parallax hook ─────────────────────────────────── */
 function useMouse() {
@@ -1280,7 +1280,7 @@ export default function HeroSection() {
           left: 0,
           right: 0,
           height: 120,
-          background: "linear-gradient(to top, #f8fafc , transparent)",
+          // background: "linear-gradient(to top, #f8fafc , transparent)",
           zIndex: 2,
         }}
       />

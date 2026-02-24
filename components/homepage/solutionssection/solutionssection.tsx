@@ -14,7 +14,7 @@ import {
   BookOpen,
   ArrowUpRight,
 } from "lucide-react";
-import AnimatedGrid from "../animatedgrid/animatedgrid";
+import AnimatedGrid from "../../shared/animatedgrid/animatedgrid";
 
 interface Product {
   label: string;
