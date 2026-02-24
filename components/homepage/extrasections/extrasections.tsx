@@ -20,7 +20,7 @@ import {
   MessageSquare,
   HeartHandshake,
 } from "lucide-react";
-import AnimatedGrid from "../animatedgrid/animatedgrid";
+import AnimatedGrid from "../../shared/animatedgrid/animatedgrid";
 
 /* ══════════════════════════════════════════════════════════
    1. SUBSCRIPTION SECTION
@@ -45,7 +45,7 @@ export function SubscribeSection() {
         background: "#f8faff",
       }}
     >
-      <AnimatedGrid color='rgba(15,23,42,0.025)' size={48} speed={14} />
+      <AnimatedGrid  />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
@@ -312,216 +312,6 @@ const TESTIMONIALS = [
   },
 ];
 
-export function TestimonialsSection() {
-  return (
-    <section
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        fontFamily: "'Plus Jakarta Sans', sans-serif",
-        background: "#f8faff",
-      }}
-    >
-      <AnimatedGrid color='rgba(15,23,42,0.025)' size={48} speed={14} />
-
-      <style>{`
-        .testi-wrap {
-          position: relative;
-          z-index: 1;
-          max-width: 1180px;
-          margin: 0 auto;
-          padding: 30px 24px 50px;
-        }
-        .testi-header { text-align: center; margin-bottom: 52px; }
-        .testi-eyebrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 11.5px;
-          font-weight: 700;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #6366f1;
-          background: rgba(99,102,241,0.08);
-          border: 1px solid rgba(99,102,241,0.2);
-          padding: 6px 16px;
-          border-radius: 100px;
-          margin-bottom: 18px;
-        }
-        .testi-eyebrow::before {
-          content: '';
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #6366f1;
-          animation: testi-pulse 2s ease-in-out infinite;
-        }
-        @keyframes testi-pulse {
-          0%,100% { opacity:1; transform:scale(1); }
-          50%      { opacity:0.4; transform:scale(1.5); }
-        }
-        .testi-title {
-          font-size: clamp(28px, 3.5vw, 44px);
-          font-weight: 800;
-          color: #0f172a;
-          line-height: 1.15;
-          letter-spacing: -1px;
-          margin-bottom: 12px;
-        }
-        .testi-title span {
-          background: linear-gradient(90deg,#6366f1,#ec4899);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        .testi-sub {
-          font-size: 15px;
-          color: #64748b;
-          max-width: 400px;
-          margin: 0 auto;
-          line-height: 1.7;
-        }
-
-        .testi-grid {
-          display: grid;
-          grid-template-columns: repeat(3,1fr);
-          gap: 20px;
-        }
-
-        .testi-card {
-          background: #f8faff;
-          border: 1.5px solid #eef0f6;
-          border-radius: 20px;
-          padding: 28px;
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-          animation: testi-up 0.5s ease both;
-          transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-          cursor: default;
-        }
-        .testi-card:hover {
-          border-color: #c7d2fe;
-          transform: translateY(-5px);
-          box-shadow: 0 16px 40px rgba(99,102,241,0.1);
-        }
-        @keyframes testi-up {
-          from { opacity:0; transform:translateY(16px); }
-          to   { opacity:1; transform:translateY(0); }
-        }
-
-        .testi-quote-icon {
-          width: 36px; height: 36px;
-          border-radius: 10px;
-          background: linear-gradient(135deg,#6366f1,#818cf8);
-          display: flex; align-items: center; justify-content: center;
-          flex-shrink: 0;
-        }
-
-        .testi-stars {
-          display: flex;
-          gap: 3px;
-        }
-
-        .testi-text {
-          font-size: 14.5px;
-          color: #334155;
-          line-height: 1.75;
-          font-style: italic;
-          flex: 1;
-        }
-
-        .testi-author {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding-top: 16px;
-          border-top: 1px solid #eef0f6;
-        }
-        .testi-avatar {
-          width: 44px; height: 44px;
-          border-radius: 14px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 13px; font-weight: 800; color: #fff;
-          flex-shrink: 0;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.13);
-        }
-        .testi-name {
-          font-size: 14px;
-          font-weight: 700;
-          color: #0f172a;
-          margin-bottom: 2px;
-        }
-        .testi-role {
-          font-size: 12px;
-          color: #94a3b8;
-          font-weight: 500;
-        }
-
-        @media (max-width: 900px) { .testi-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 640px) { .testi-grid { grid-template-columns: 1fr; } }
-      `}</style>
-
-      <div className='testi-wrap'>
-        <div className='testi-header'>
-          <div>
-            <span className='testi-eyebrow'>Testimonials</span>
-          </div>
-          <h2 className='testi-title'>
-            Loved by <span>thousands</span> of teams
-          </h2>
-          <p className='testi-sub'>
-            Don&apos;t take our word for it — hear from the businesses
-            we&apos;ve helped grow.
-          </p>
-        </div>
-
-        <div className='testi-grid'>
-          {TESTIMONIALS.map((t, i) => (
-            <div
-              key={t.name}
-              className='testi-card'
-              style={{ animationDelay: `${i * 90}ms` }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div className='testi-quote-icon'>
-                  <Quote size={16} color='#fff' strokeWidth={1.6} />
-                </div>
-                <div className='testi-stars'>
-                  {Array.from({ length: t.rating }).map((_, s) => (
-                    <Star key={s} size={13} fill='#f59e0b' color='#f59e0b' />
-                  ))}
-                </div>
-              </div>
-              <p className='testi-text'>&ldquo;{t.quote}&rdquo;</p>
-              <div className='testi-author'>
-                <div
-                  className='testi-avatar'
-                  style={{ background: t.gradient }}
-                >
-                  {t.initials}
-                </div>
-                <div>
-                  <div className='testi-name'>{t.name}</div>
-                  <div className='testi-role'>{t.role}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════
-   3. HOW WE WORK (PROCESS) SECTION
-══════════════════════════════════════════════════════════ */
 const STEPS = [
   {
     num: "01",
@@ -577,7 +367,7 @@ export function ProcessSection() {
         background: "#f8faff",
       }}
     >
-      <AnimatedGrid color='rgba(15,23,42,0.025)' size={48} speed={14} />
+      <AnimatedGrid  />
 
       <style>{`
         .proc-wrap {
@@ -754,7 +544,7 @@ export function TechStackSection() {
         background: "#f8faff",
       }}
     >
-      <AnimatedGrid color='rgba(15,23,42,0.025)' size={48} speed={14} />
+      <AnimatedGrid  />
 
       <style>{`
         .tech-wrap {

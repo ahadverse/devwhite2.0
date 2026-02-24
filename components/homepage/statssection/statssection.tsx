@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Users, Package, Download, Smile, Globe } from "lucide-react";
-import AnimatedGrid from "../animatedgrid/animatedgrid";
+import AnimatedGrid from "../../shared/animatedgrid/animatedgrid";
 
 /* ── Count-up hook ── */
 function useCountUp(target: number, duration = 1800, started = false) {

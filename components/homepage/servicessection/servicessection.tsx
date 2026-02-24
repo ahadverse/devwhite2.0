@@ -17,7 +17,7 @@ import {
   ArrowUpRight,
   CheckCircle2,
 } from "lucide-react";
-import AnimatedGrid from "../animatedgrid/animatedgrid";
+import AnimatedGrid from "../../shared/animatedgrid/animatedgrid";
 
 interface Service {
   label: string;

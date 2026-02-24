@@ -22,7 +22,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         {children}
         <ToastContainer />
         <Footer />
-        <div className='bg-[#1a1a1a]'>
+        <div className='bg-[#0A0A0A]'>
           <ScrollToTop />
           <br />
           <br />
